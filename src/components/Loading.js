@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { getNotes } from '../actions/notesAction';
 import { getUser } from '../actions/userAction';
+import '../css/loading.css';
 
 class Loading extends Component{
 
@@ -29,8 +30,8 @@ class Loading extends Component{
         if( (!notesLoading && !userLoadgin) || this.props.user === null ){
            return <div>{children}</div>;
         }else{
-           return (<div>
-                        <h1>Loading ...</h1>
+           return (<div className="flex-center position-ref full-height">
+                        <div className="title m-b-md">Loading ...</div>
                     </div>);
         }
        

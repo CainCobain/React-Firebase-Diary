@@ -10,12 +10,13 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
 import thunk from 'redux-thunk';
-import {BrowserRouter,Switch, Link, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter,Switch, Route} from 'react-router-dom';
 import Header from './components/header/Header';
 import Login from './components/Login';
 import Loading from './components/Loading';
 import NoteDetail from './components/NoteDetail';
 import AuthComp from './components/AuthComp';
+import NoteEdit from './components/NoteEdit';
 
 // create store
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -35,6 +36,7 @@ ReactDOM.render(
                     <Header />
                     <Route path="/" component={App} exact={true} />
                     <Route path="/:id" component={NoteDetail} exact={true} />
+                    <Route path="/:id/edit" component={NoteEdit} exact={true} />
                 </AuthComp>
             </Switch>
         </div>

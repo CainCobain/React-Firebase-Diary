@@ -31,7 +31,10 @@ export function saveNotes(note){
 
 export function deleteNote(id){
   return dispatch => database.child(id).remove();
-<<<<<<< HEAD
+}
+
+export function updateNotes(id,note){
+    return dispatch => database.child(id).update(note);
 }
 
 //Comment notes 
@@ -40,6 +43,4 @@ export function saveComment(noteId, comment){
     return dispatch =>{
         database.child(noteId).child('comments').push(comment);
     } 
-=======
->>>>>>> 3b78c9faecad407ce49365166451c0d8ce230407
 }

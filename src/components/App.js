@@ -11,12 +11,12 @@ import { Link } from 'react-router-dom';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     // state 
     this.state = {
-      title : '',
-      post : ''
+      title: '',
+      post: ''
     }
     // binding methods
     this.handleChange = this.handleChange.bind(this);
@@ -24,43 +24,49 @@ class App extends Component {
     this.renderPosts = this.renderPosts.bind(this);
   }
 
-  handleChange(e){
-    
+  handleChange(e) {
+
     this.setState({
-      [e.target.name] : e.target.value
+      [e.target.name]: e.target.value
     })
 
   }
-  
-  handleSubmit(e){
+
+  handleSubmit(e) {
     e.preventDefault();
     const post = {
-      title : this.state.title,
-      post : this.state.post,
-      uid : this.props.user.uid
+      title: this.state.title,
+      post: this.state.post,
+      uid: this.props.user.uid
     }
     this.props.saveNotes(post);
     this.setState({
-      title : '',
-      post : ''
+      title: '',
+      post: ''
     })
   }
 
   renderPosts() {
-    return _.map(this.props.notes,(note,key)=>{
+    return _.map(this.props.notes, (note, key) => {
       return (
         <NoteCard key={key}>
-        <Link to={`/${key}`}>
-          <h2>{note.title}</h2>
-        </Link>
-            <p>{note.post}</p>
-            {note.uid === this.props.user.uid &&(
-              <button 
-              className="btn btn-danger btn-sm"
-              onClick={()=> this.props.deleteNote(key)}
+          <Link to={`/${key}`}>
+            <h2>{note.title}</h2>
+          </Link>
+          <p>{note.post}</p>
+          {note.uid === this.props.user.uid && (
+            <div>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => this.props.deleteNote(key)}
               >Delete Note</button>
-            )}
-            
+              <Link
+                className="btn btn-info btn-sm float-right"
+                to={`/${key}/edit`}
+              >Update Note</Link>
+            </div>
+          )}
+
         </NoteCard>
       )
     });
@@ -70,57 +76,69 @@ class App extends Component {
     return (
       <div className="container">
 
-      <div className="row"> 
-        <div className="col-sm-6 offset-sm-3">
-         <form onSubmit={this.handleSubmit} >
-          <div className="form-group">
-            <label >Post Title : </label>
-            <input 
-            onChange={this.handleChange}
-            value={this.state.title}
-            type="text" 
-            className="form-control" 
-            id="title"
-            name="title"
-            placeholder="Enter title" />
+        <div className="row">
+          <div className="col-sm-2 text-center">
+            <img 
+              src={this.props.user.photoURL}
+              height="100px"
+              className="img img-responsive rounded-circle"
+              alt="user-img"
+            />
+            <h4 className="username">Welcome back, {this.props.user.displayName}</h4>
           </div>
-          <div className="form-group">
-            <label >Your Post :</label>
-            <textarea
-            onChange={this.handleChange}
-            value={this.state.post}
-            cols="30"
-            className="form-control" 
-            id="post"
-            name="post"
-            placeholder="Post Content..." />
+          <div className="col-sm-10">
+            <form onSubmit={this.handleSubmit} >
+              <div className="form-group">
+                <label >Post Title : </label>
+                <input
+                  onChange={this.handleChange}
+                  value={this.state.title}
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  name="title"
+                  placeholder="Enter title" />
+              </div>
+              <div className="form-group">
+                <label >Your Post :</label>
+                <textarea
+                  onChange={this.handleChange}
+                  value={this.state.post}
+                  cols="30"
+                  className="form-control"
+                  id="post"
+                  name="post"
+                  placeholder="Post Content..." />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{marginBottom:'2%'}}
+                >Add post</button>
+            </form>
+            
+            {this.renderPosts()}
           </div>
-          <button 
-          type="submit"
-           className="btn btn-primary">Add post</button>
-        </form>
-        {this.renderPosts()}
         </div>
-      </div>
-       
+
       </div>
     );
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    notes : state.notes,
-    user : state.user
+    notes: state.notes,
+    user: state.user
   }
 }
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getNotes,
     saveNotes,
     deleteNote,
     getUser
-  },dispatch)
+  }, dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
