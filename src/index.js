@@ -34,9 +34,9 @@ ReactDOM.render(
                 <Route path="/login" component={Login} exact={true} />
                 <AuthComp>
                     <Header />
-                    <Route path="/" component={App} exact={true} />
-                    <Route path="/:id" component={NoteDetail} exact={true} />
                     <Route path="/:id/edit" component={NoteEdit} exact={true} />
+                    <Route path="/:id" component={NoteDetail} exact={true} />
+                    <Route path="/" component={App} exact={true} />
                 </AuthComp>
             </Switch>
         </div>

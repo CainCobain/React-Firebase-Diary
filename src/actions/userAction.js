@@ -1,7 +1,5 @@
 import { auth, googleProvider, facebookProvider} from '../firebase';
 
-
-
 export function getUser(){
     return dispatch => {
 
@@ -29,6 +27,15 @@ export function googleLogin(){
 
 export function facebookLogin(){
     return dispatch => auth.signInWithPopup(facebookProvider);
+}
+
+export function emailLogin(email, password){
+    return dispatch => auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        //var errorCode = error.code;
+        //var errorMessage = error.message;
+        console.log('creat user error !!!');
+      });
 }
 
 export function logout(){

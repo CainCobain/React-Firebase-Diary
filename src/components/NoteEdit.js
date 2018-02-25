@@ -8,8 +8,8 @@ class NoteEdit extends Component {
         super(props);
         // state 
             this.state = {
-            title: this.props.note.title,
-            post: this.props.note.post
+                title: props.note.title,
+                post: props.note.post
         }
         
         // binding methods

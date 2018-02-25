@@ -24,6 +24,10 @@ class App extends Component {
     this.renderPosts = this.renderPosts.bind(this);
   }
 
+  componentDidMount(){
+    this.props.getNotes();
+  }
+  
   handleChange(e) {
 
     this.setState({
@@ -54,6 +58,7 @@ class App extends Component {
             <h2>{note.title}</h2>
           </Link>
           <p>{note.post}</p>
+          <h6>Auth: {this.props.user.uid}</h6>
           {note.uid === this.props.user.uid && (
             <div>
               <button
